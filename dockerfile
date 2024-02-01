@@ -2,7 +2,7 @@
 FROM mcr.microsoft.com/windows/servercore:ltsc2019
 
 # Set the working directory
-WORKDIR C:\app
+WORKDIR C:\
 
 # Download and extract steamcmd.zip
 ADD https://steamcdn-a.akamaihd.net/client/installer/steamcmd.zip .
