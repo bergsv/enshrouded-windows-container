@@ -2,7 +2,7 @@
 FROM mcr.microsoft.com/windows/servercore:ltsc2022
 
 # Set the working directory
-WORKDIR C:\Enshrouded
+WORKDIR C:/Enshrouded
 
 # Download and extract steamcmd.zip
 ADD https://steamcdn-a.akamaihd.net/client/installer/steamcmd.zip .
