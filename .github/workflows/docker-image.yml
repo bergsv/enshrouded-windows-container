@@ -19,4 +19,4 @@ jobs:
     - name: Build the Docker image
       run: docker build . --file dockerfile --tag enshrouded-win:$(date +%s)
     - name: Publish the Docker image
-      run: docker push enshrouded-win:$(date +%s)
+      run: docker push sbergendahl/enshrouded-win:$(date +%s)
