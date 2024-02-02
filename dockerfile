@@ -36,5 +36,10 @@ RUN c:\steamcmd\steamcmd.exe +login anonymous +app_update 2278520 +quit; exit 0
 # Change to Enshrouded Server Directory
 WORKDIR "c:\steamcmd\steamapps\common\EnshroudedServer"
 
-######## ENTRYPOINT ########
-ENTRYPOINT .\enshrouded_server.exe
+COPY enshrouded_server.json .
+
+# Create entrypoint script
+COPY entrypoint.ps1 .
+
+# Set the entrypoint
+ENTRYPOINT .\entrypoint.ps1
