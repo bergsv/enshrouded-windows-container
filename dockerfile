@@ -1,15 +1,40 @@
-# Use the Windows Server Core image
-FROM mcr.microsoft.com/windows/servercore:ltsc2022
+######## INSTALL ########
 
-# Set the working directory
-WORKDIR C:\\Enshrouded
+# Set the base image
+FROM mcr.microsoft.com/windows/server:ltsc2022
 
-# Copy the Enshrouded 
-COPY update_ensh_ds.txt C:\\Enshrouded\\update_ensh_ds.txt
+# Set alternative shell
+SHELL ["powershell"]
 
-# Download, Extract steamcmd and Update Enshrouded Data Files
-ADD https://steamcdn-a.akamaihd.net/client/installer/steamcmd.zip .
-RUN powershell -Command Expand-Archive -Path steamcmd.zip -DestinationPath .
+# Set environment variables
+ENV POWERSHELL_TELEMETRY_OPTOUT 1
+ENV HOME "c:\steamcmd"
 
-# Start Enshrouded 
-CMD ["C:\\Enshrouded\\steamcmd.exe", "+runscript", "update_ensh_ds.txt", "&", "C:\\Enshrouded\\steamapps\\common\\EnshroudedServer\\EnshroudedServer.exe"]
+# Create system user
+RUN New-LocalUser -Name "steamcmd" -NoPassword -AccountNeverExpires -UserMayNotChangePassword | Set-LocalUser -PasswordNeverExpires $true
+
+# Switch to user
+USER steamcmd
+
+# Create SteamCMD directory
+RUN New-Item -ItemType Directory "c:\steamcmd"
+
+# Set SteamCMD working directory
+WORKDIR $HOME
+
+# Download and unpack SteamCMD archive
+RUN Invoke-WebRequest http://media.steampowered.com/installer/steamcmd.zip -O c:\steamcmd\steamcmd.zip; \
+    Expand-Archive c:\steamcmd\steamcmd.zip -DestinationPath c:\steamcmd; \
+    Remove-Item c:\steamcmd\steamcmd.zip
+
+# Update SteamCMD
+RUN c:\steamcmd\steamcmd.exe +quit; exit 0
+
+# Install Enshrouded Server
+RUN c:\steamcmd\steamcmd.exe +login anonymous +app_update 2278520 +quit; exit 0
+
+# Change to Enshrouded Server Directory
+WORKDIR "c:\steamcmd\steamapps\common\EnshroudedServer"
+
+######## ENTRYPOINT ########
+ENTRYPOINT .\enshrouded_server.exe
