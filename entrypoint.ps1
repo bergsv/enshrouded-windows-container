@@ -5,10 +5,9 @@ $ConfigPath = "enshrouded_server.json"
 $ConfigContent = Get-Content -Raw -Path $ConfigPath | ConvertFrom-Json
 
 # Update the values in the Config File
-$ConfigContent.name = $env:name
-$ConfigContent.password = $env:password
-$ConfigContent.slotCount = $env:slots
-
+$ConfigContent.name = $env:Servername
+$ConfigContent.password = $env:Serverpassword
+$ConfigContent.slotCount = $env:Serverslots
 # Save the modified Config File
 $ConfigContent | ConvertTo-Json | Set-Content -Path $ConfigPath
 
