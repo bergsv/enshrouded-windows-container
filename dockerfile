@@ -10,12 +10,6 @@ SHELL ["powershell"]
 ENV POWERSHELL_TELEMETRY_OPTOUT 1
 ENV HOME "c:\steamcmd"
 
-# Create system user
-RUN New-LocalUser -Name "steamcmd" -NoPassword -AccountNeverExpires -UserMayNotChangePassword | Set-LocalUser -PasswordNeverExpires $true
-
-# Switch to user
-USER steamcmd
-
 # Create SteamCMD directory
 RUN New-Item -ItemType Directory "c:\steamcmd"
 
