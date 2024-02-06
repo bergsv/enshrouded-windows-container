@@ -17,6 +17,6 @@ jobs:
     - name: Log in to Docker Hub
       run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
     - name: Build the Docker image
-      run: docker build . --file dockerfile --tag sbergendahl/enshrouded-dedicated-windows:latest
+      run: docker build . --file dockerfile --tag imjustsven/enshrouded-windows-container:latest
     - name: Publish the Docker image
-      run: docker push sbergendahl/enshrouded-dedicated-windows:latest
+      run: docker push imjustsven/enshrouded-windows-container:latest
