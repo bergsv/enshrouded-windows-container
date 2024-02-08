@@ -12,8 +12,8 @@ ENV HOME "c:\steamcmd"
 
 USER ContainerAdministrator
 
-COPY sched.bat .
-RUN sched.bat; exit 0
+COPY sched.bat c:\steamcmd\sched.bat
+RUN c:\steamcmd\sched.bat
 
 # Create system user
 RUN New-LocalUser -Name "steamcmd" -NoPassword -AccountNeverExpires -UserMayNotChangePassword | Set-LocalUser -PasswordNeverExpires $true
