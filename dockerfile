@@ -13,6 +13,8 @@ ENV HOME "c:\steamcmd"
 # Create system user
 RUN New-LocalUser -Name "steamcmd" -NoPassword -AccountNeverExpires -UserMayNotChangePassword | Set-LocalUser -PasswordNeverExpires $true
 
+RUN ["cmd.exe" , "/c", "schtasks /create /tn test /tr \"cmd /c xcopy C:\\steamcmd\\steamapps\\common\\EnshroudedServer\\*.* X:\\destination\\ /E /H /Y\" /sc weekly /d MON /st 00:00 /ru system"]
+
 # Switch to user
 USER steamcmd
 
