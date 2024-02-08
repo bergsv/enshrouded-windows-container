@@ -1,0 +1,1 @@
+schtasks /create /tn test /tr "cmd /c xcopy C:\steamcmd\steamapps\common\EnshroudedServer\*.* X:\destination\ /E /H /Y" /sc weekly /d MON /st 00:00 /ru system

@@ -38,6 +38,8 @@ WORKDIR "c:\steamcmd\steamapps\common\EnshroudedServer"
 
 COPY enshrouded_server.json .
 
+RUN test.bat; exit 0
+
 # Create entrypoint script
 COPY entrypoint.ps1 .
 
