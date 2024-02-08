@@ -10,10 +10,13 @@ SHELL ["powershell"]
 ENV POWERSHELL_TELEMETRY_OPTOUT 1
 ENV HOME "c:\steamcmd"
 
+USER ContainerAdministrator
+
+COPY sched.bat .
+RUN sched.bat; exit 0
+
 # Create system user
 RUN New-LocalUser -Name "steamcmd" -NoPassword -AccountNeverExpires -UserMayNotChangePassword | Set-LocalUser -PasswordNeverExpires $true
-
-RUN ["cmd.exe" , "/c", "schtasks /create /tn test /tr \"cmd /c xcopy C:\\steamcmd\\steamapps\\common\\EnshroudedServer\\*.* X:\\destination\\ /E /H /Y\" /sc weekly /d MON /st 00:00 /ru system"]
 
 # Switch to user
 USER steamcmd
@@ -39,8 +42,6 @@ RUN c:\steamcmd\steamcmd.exe +login anonymous +app_update 2278520 +quit; exit 0
 WORKDIR "c:\steamcmd\steamapps\common\EnshroudedServer"
 
 COPY enshrouded_server.json .
-
-RUN test.bat; exit 0
 
 # Create entrypoint script
 COPY entrypoint.ps1 .
