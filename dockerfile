@@ -16,10 +16,8 @@ COPY sched.bat .
 RUN .\sched.bat
 
 # Create system user
-RUN New-LocalUser -Name "steamcmd" -NoPassword -AccountNeverExpires -UserMayNotChangePassword | Set-LocalUser -PasswordNeverExpires $true
 
 # Switch to user
-USER steamcmd
 
 # Create SteamCMD directory
 RUN New-Item -ItemType Directory "c:\steamcmd"
